@@ -61,7 +61,7 @@ let scrabbleScore = function(word) {
   word = word.toLowerCase();
   let score = 0;
   for (let i = 0; i < word.length; i++) {
-    score += Number(newPointStructure[word[i]]);
+    score += newPointStructure[word[i]];
   }
   return score;
 }
@@ -70,17 +70,17 @@ const scoringAlgorithms = [
   {
     name: 'Simple Score',
     description: 'Each letter is worth 1 point.',
-    scoreFunction: simpleScore
+    scoringFunction: simpleScore
   },
   {
     name: 'Vowel Score',
     description: 'Vowels are 3 pts, consonants are 1 pt.',
-    scoreFunction: vowelBonusScore
+    scoringFunction: vowelBonusScore
   },
   {
     name: 'Scrabble Score',
     description: 'The traditional scoring algorithm',
-    scoreFunction: scrabbleScore
+    scoringFunction: scrabbleScore
   }
 ];
 
@@ -94,7 +94,7 @@ function transform(obj) {
   for (key in obj) {
     for (let i = 0; i < obj[key].length; i++) {
       let downCased = obj[key][i].toLowerCase();
-      transformed[downCased] = key;
+      transformed[downCased] = Number(key);
     }
   }
   return transformed;
@@ -106,6 +106,7 @@ function runProgram() {
   let word = initialPrompt();
   let scorer = scorerPrompt();
   console.log(`\nScore for '${word}': ${scorer.scoreFunction(word)}`);
+  console.log(newPointStructure);
 }
 
 // Don't write any code below this line //
