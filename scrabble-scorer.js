@@ -45,10 +45,10 @@ let simpleScore = function(word) {
 };
 
 let vowelBonusScore = function(word) {
-  word = word.toUpperCase();
+  word = word.toLowerCase();
   let score = 0;
   for (let i = 0; i < word.length; i++) {
-    if (['A', 'E', 'I', 'O', 'U'].includes(word[i])) {
+    if (['a', 'e', 'i', 'o', 'u'].includes(word[i])) {
       score += 3;
     } else {
       score++;
@@ -57,7 +57,14 @@ let vowelBonusScore = function(word) {
   return score;
 };
 
-let scrabbleScore;
+let scrabbleScore = function(word) {
+  word = word.toLowerCase();
+  let score = 0;
+  for (let i = 0; i < word.length; i++) {
+    score += Number(newPointStructure[word[i]]);
+  }
+  return score;
+}
 
 const scoringAlgorithms = [
   {
@@ -73,7 +80,7 @@ const scoringAlgorithms = [
   {
     name: 'Scrabble Score',
     description: 'The traditional scoring algorithm',
-    scoreFunction: oldScrabbleScorer
+    scoreFunction: scrabbleScore
   }
 ];
 
@@ -93,13 +100,12 @@ function transform(obj) {
   return transformed;
 }
 
-let newPointStructure;
+let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
   let word = initialPrompt();
   let scorer = scorerPrompt();
-  console.log(`Score for '${word}': ${scorer.scoreFunction(word)}`);
-  console.log(transform(oldPointStructure));
+  console.log(`\nScore for '${word}': ${scorer.scoreFunction(word)}`);
 }
 
 // Don't write any code below this line //
