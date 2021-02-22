@@ -13,21 +13,21 @@ const oldPointStructure = {
 };
 
 function oldScrabbleScorer(word) {
-	word = word.toUpperCase();
-	let letterPoints = "";
- 
-	for (let i = 0; i < word.length; i++) {
- 
-	  for (const pointValue in oldPointStructure) {
- 
-		 if (oldPointStructure[pointValue].includes(word[i])) {
-			letterPoints += `Points for '${word[i]}': ${pointValue}\n`
-		 }
- 
-	  }
-	}
-	return letterPoints;
- }
+  word = word.toUpperCase();
+  let letterPoints = "";
+
+  for (let i = 0; i < word.length; i++) {
+
+    for (const pointValue in oldPointStructure) {
+
+      if (oldPointStructure[pointValue].includes(word[i])) {
+        letterPoints += `Points for '${word[i]}': ${pointValue}\n`
+      }
+
+    }
+  }
+  return letterPoints;
+}
 
 // your job is to finish writing these functions and variables that we've named //
 // don't change the names or your program won't work as expected. //
@@ -53,7 +53,7 @@ let vowelBonusScore = function(word) {
     } else {
       score++;
     }
-  } 
+  }
   return score;
 };
 
@@ -73,7 +73,7 @@ const scoringAlgorithms = [
   {
     name: 'Scrabble Score',
     description: 'The traditional scoring algorithm',
-    scoreFunction: oldScrabbleScorer 
+    scoreFunction: oldScrabbleScorer
   }
 ];
 
@@ -82,7 +82,16 @@ function scorerPrompt() {
   return scoringAlgorithms[algorithm];
 }
 
-function transform() {};
+function transform(obj) {
+  let transformed = {};
+  for (key in obj) {
+    for (let i = 0; i < obj[key].length; i++) {
+      let downCased = obj[key][i].toLowerCase();
+      transformed[downCased] = key;
+    }
+  }
+  return transformed;
+}
 
 let newPointStructure;
 
@@ -90,20 +99,21 @@ function runProgram() {
   let word = initialPrompt();
   let scorer = scorerPrompt();
   console.log(`Score for '${word}': ${scorer.scoreFunction(word)}`);
+  console.log(transform(oldPointStructure));
 }
 
 // Don't write any code below this line //
 // And don't change these or your program will not run as expected //
 module.exports = {
-   initialPrompt: initialPrompt,
-   transform: transform,
-   oldPointStructure: oldPointStructure,
-   simpleScore: simpleScore,
-   vowelBonusScore: vowelBonusScore,
-   scrabbleScore: scrabbleScore,
-   scoringAlgorithms: scoringAlgorithms,
-   newPointStructure: newPointStructure,
-	runProgram: runProgram,
-	scorerPrompt: scorerPrompt
+  initialPrompt: initialPrompt,
+  transform: transform,
+  oldPointStructure: oldPointStructure,
+  simpleScore: simpleScore,
+  vowelBonusScore: vowelBonusScore,
+  scrabbleScore: scrabbleScore,
+  scoringAlgorithms: scoringAlgorithms,
+  newPointStructure: newPointStructure,
+  runProgram: runProgram,
+  scorerPrompt: scorerPrompt
 };
 
